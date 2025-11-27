@@ -12,6 +12,9 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 
+tracking_uri = os.environ.get("MLFLOW_TRACKING_URI")
+mlflow.set_tracking_uri(tracking_uri)
+
 
 def train_model(n_estimators):
 
