@@ -70,7 +70,6 @@ def train_model(n_estimators):
         )
         print("Experimento registrado con MLflow.")
 
-        # --- Sección de Reporte para CML ---
         # 1. Generar la matriz de confusión
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(8, 6))
@@ -80,7 +79,6 @@ def train_model(n_estimators):
         plt.ylabel("Valores Reales")
         plt.savefig("confusion_matrix.png")
         print("Matriz de confusión guardada como 'confusion_matrix.png'")
-        # --- Fin de la sección de Reporte ---
 
         mlflow.log_artifact("confusion_matrix.png")
         metrics = {"accuracy": accuracy}

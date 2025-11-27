@@ -1,0 +1,40 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: echo "Verificando que los datos existen..."
+    deps:
+    - path: data/wine_dataset.csv
+      hash: md5
+      md5: 2925c4a8cd201c79d97d3d283429ef23
+      size: 12261
+  train:
+    cmd: python train.py --n_estimators 100
+    deps:
+    - path: data/wine_dataset.csv
+      hash: md5
+      md5: 2925c4a8cd201c79d97d3d283429ef23
+      size: 12261
+    - path: requirements.txt
+      hash: md5
+      md5: 11eab35c69aef370e0eb3da4e9890d5b
+      size: 73
+    - path: train.py
+      hash: md5
+      md5: 5d789f61dbfa2fe30222e248d093391b
+      size: 3349
+    params:
+      params.yaml:
+        train.n_estimators: 100
+    outs:
+    - path: confusion_matrix.png
+      hash: md5
+      md5: d939923c38344fc436c2f7cbd9b527c1
+      size: 21086
+    - path: mlflow_metrics.json
+      hash: md5
+      md5: fedcd544ae19b9b1fa2b08a41e8bed22
+      size: 32
+    - path: model.pkl
+      hash: md5
+      md5: acbee515c689fd01e6602a1b34b46544
+      size: 378957
