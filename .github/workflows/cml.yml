@@ -116,7 +116,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f app-deployment.yaml
-          kubectl apply -f app-service.yaml
+          kubectl apply -f api-deployment.yaml
+          kubectl apply -f api-service.yaml
           kubectl apply -f web-deployment.yaml
           kubectl apply -f web-service.yaml
