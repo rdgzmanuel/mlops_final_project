@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mlops-fp-api:
+    image: manuelrdgz/mlops-fp-api  # Asegúrate de que esta imagen existe o usa 'build: .'
+    container_name: mlops-fp-api
+    ports:
+      # HOST:CONTENEDOR. Usamos 6000 en tu Mac para evitar el error de puerto en uso.
+      - "6000:5000"
+    restart: always
+
+  mlops-fp-web:
+    image: manuelrdgz/mlops-fp-web
+    container_name: mlops-fp-web
+    ports:
+      - "8501:8501"
+    environment:
+      # IMPORTANTE: Aquí usamos el nombre del servicio 'mlops-api' y el puerto INTERNO (5000).
+      # Dentro de la red de Docker, se comunican directamente, no pasan por tu Mac.
+      - API_URL=http://mlops-fp-api:5000/predict
+    depends_on:
+      - mlops-fp-api
+    restart: always
