@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: mlops-fp-api
-        image: gcr.io/final-project-479716/mlops-api:latest # <--- Reemplaza con la ruta de tu imagen
+        image: gcr.io/final-project-479716/mlops-fp-api:latest # <--- Reemplaza con la ruta de tu imagen
         ports:
         - containerPort: 5000
