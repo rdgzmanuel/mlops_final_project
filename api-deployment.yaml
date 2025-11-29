@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlops-fp-api-deployment
+  labels:
+    app: mlops-fp-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlops-fp-api
+  template:
+    metadata:
+      labels:
+        app: mlops-fp-api
+    spec:
+      containers:
+      - name: mlops-fp-api
+        image: gcr.io/final-project-479716/mlops-fp-api:latest # <--- Reemplaza con la ruta de tu imagen
+        ports:
+        - containerPort: 5000
