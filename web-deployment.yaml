@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlops-fp-web-deployment
+  labels:
+    app: mlops-fp-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlops-fp-web
+  template:
+    metadata:
+      labels:
+        app: mlops-fp-web
+    spec:
+      containers:
+        - name: mlops-fp-web
+          image: gcr.io/final-project-479716/mlops-fp-web:latest # <--- RUTA DE IMAGEN
+          ports:
+          - containerPort: 8501
+          env:
+          - name: API_URL
+            value: http://mlops-fp-api-service:5000/predict # <--- Conexión al servicio interno de la API
