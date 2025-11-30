@@ -6,7 +6,8 @@ spec:
   selector:
     app: mlops-fp-api
   ports:
-    - protocol: TCP
+    - name: metrics
+      protocol: TCP
       port: 80 # 80
       targetPort: 5000
   type: ClusterIP

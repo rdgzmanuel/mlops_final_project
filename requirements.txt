@@ -7,3 +7,4 @@ pyarrow==14.0.1
 seaborn
 Flask
 streamlit
+prometheus-client

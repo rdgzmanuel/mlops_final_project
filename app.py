@@ -1,6 +1,14 @@
 import joblib
 import numpy as np
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
+
+# Contador de Prometheus para predicciones por tipo de vino
+PREDICTION_COUNTER = Counter(
+    "wine_prediction_count",
+    "Contador de predicciones del modelo Wine por tipo de vino",
+    ["wine_type"],
+)
 
 # Cargar el modelo entrenado
 try:
@@ -14,6 +22,11 @@ except FileNotFoundError:
 
 # Inicializar la aplicación Flask
 app = Flask(__name__)
+
+
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 
 @app.route("/predict", methods=["POST"])
@@ -30,12 +43,21 @@ def predict():
 
         # Realizar la predicción
         prediction = model.predict(features)
+        prediction_int = int(prediction[0])
 
-        # Devolver la predicción en formato JSON
-        return jsonify({"prediction": int(prediction[0])})
+        # Mapear el resultado numérico a un tipo de vino
+        wine_map = {0: "Barolo", 1: "Grignolino", 2: "Barbera"}
+        predicted_wine = wine_map.get(prediction_int, "unknown")
+
+        # Incrementa el contador para el tipo de vino predicho
+        PREDICTION_COUNTER.labels(wine_type=predicted_wine).inc()
+
+        return jsonify({"prediction": prediction_int, "wine_type": predicted_wine})
+
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 
 if __name__ == "__main__":
+    print("Iniciando API en puerto 5000...")
     app.run(host="0.0.0.0", port=5000)

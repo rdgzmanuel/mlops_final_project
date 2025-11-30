@@ -1,0 +1,14 @@
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: mlops-fp-api-pod-monitor
+  namespace: default
+
+spec:
+  selector:
+    matchLabels:
+      app: mlops-fp-api
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
