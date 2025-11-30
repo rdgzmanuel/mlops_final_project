@@ -57,7 +57,7 @@ if st.button("Obtener Predicción"):
     payload = {"features": features}
 
     # URL del servicio Flask - Fixed default to use container name
-    api_url = os.environ.get("API_URL", "http://mlops-fp-api:5000/predict")
+    api_url = os.environ.get("API_URL")
 
     try:
         response = requests.post(
