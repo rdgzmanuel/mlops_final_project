@@ -7,6 +7,6 @@ spec:
     app: mlops-fp-api
   ports:
     - protocol: TCP
-      port: 80
+      port: 6000 # 80
       targetPort: 5000
   type: ClusterIP
